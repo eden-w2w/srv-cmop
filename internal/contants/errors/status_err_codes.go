@@ -17,6 +17,8 @@ const (
 const (
 	// 未找到
 	NotFound status_error.StatusErrorCode = http.StatusNotFound*1e6 + ServiceStatusErrorCode + iota
+	// @errTalk 管理员未找到
+	AdminNotFound
 	// @errTalk 用户未找到
 	UserNotFound
 	// @errTalk 订单未找到
@@ -28,6 +30,8 @@ const (
 const (
 	// @errTalk 未授权
 	Unauthorized status_error.StatusErrorCode = http.StatusUnauthorized*1e6 + ServiceStatusErrorCode + iota
+	// @errTalk 用户名或密码错误
+	InvalidUserNamePassword
 )
 
 const (
