@@ -22,8 +22,8 @@ var Config = struct {
 }{
 	LogLevel: logrus.DebugLevel,
 
-	MasterDB: &mysql.MySQL{Database: databases.Config.DBTest},
-	SlaveDB:  &mysql.MySQL{Database: databases.Config.DBTest},
+	MasterDB: &mysql.MySQL{Database: databases.Config.DB},
+	SlaveDB:  &mysql.MySQL{Database: databases.Config.DB},
 
 	GRPCServer: &transport_grpc.ServeGRPC{
 		Port: 8900,

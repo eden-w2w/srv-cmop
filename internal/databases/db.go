@@ -5,7 +5,7 @@ import (
 )
 
 var Config = struct {
-	DBTest *sqlx.Database
+	DB *sqlx.Database
 }{
-	DBTest: &sqlx.Database{},
+	DB: &sqlx.Database{},
 }
