@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  name: ${PROJECT_NAME}
+  namespace: ${PROJECT_GROUP}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      workload.user.cattle.io/workloadselector: ${PROJECT_SELECTOR}
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        workload.user.cattle.io/workloadselector: ${PROJECT_SELECTOR}
+    spec:
+      containers:
+      - image: ${PROFZONE_DOCKER_REGISTRY}/${PROJECT_GROUP}/${PROJECT_NAME}:${PROJECT_VERSION}
+        imagePullPolicy: Always
+        name: ${PROJECT_NAME}
+        ports:
+        - containerPort: 8900
+          name: tcp8900
+          protocol: TCP
+        - containerPort: 8800
+          name: tcp8800
+          protocol: TCP
+        resources: {}
+      restartPolicy: Always
+status: {}

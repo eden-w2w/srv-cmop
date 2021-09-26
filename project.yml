@@ -1,0 +1,13 @@
+name: srv-cmop
+group: w2wing
+owner: eden-w2w
+version: 0.0.0
+description: 运营管理平台
+program_language: golang
+workflow:
+  extends: feature-pr
+scripts:
+  build:
+  - go build -v -o ./build/$PROJECT_NAME ./cmd
+  - eden generate openapi
+  test: go test ./cmd
