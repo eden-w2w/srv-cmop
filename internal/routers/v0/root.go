@@ -5,6 +5,7 @@ import (
 	"github.com/eden-w2w/srv-cmop/internal/routers/middleware"
 	"github.com/eden-w2w/srv-cmop/internal/routers/v0/admins"
 	"github.com/eden-w2w/srv-cmop/internal/routers/v0/goods"
+	"github.com/eden-w2w/srv-cmop/internal/routers/v0/orders"
 )
 
 var Router = courier.NewRouter(V0Router{})
@@ -22,4 +23,5 @@ func init() {
 	Router.Register(AuthRouter)
 	AuthRouter.Register(admins.Router)
 	AuthRouter.Register(goods.Router)
+	AuthRouter.Register(orders.Router)
 }

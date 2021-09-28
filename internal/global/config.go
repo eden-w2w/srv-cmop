@@ -4,19 +4,12 @@ import (
 	"github.com/eden-framework/courier/transport_grpc"
 	"github.com/eden-framework/courier/transport_http"
 	"github.com/eden-framework/eden-framework/pkg/client/mysql"
+	"github.com/eden-w2w/lib-modules/modules/id_generator"
 	"github.com/sirupsen/logrus"
 	"time"
 
 	"github.com/eden-w2w/srv-cmop/internal/databases"
 )
-
-type SnowflakeConfig struct {
-	Epoch      int64
-	BaseNodeID int64
-	NodeCount  int64
-	NodeBits   uint8
-	StepBits   uint8
-}
 
 var Config = struct {
 	LogLevel logrus.Level
@@ -29,7 +22,7 @@ var Config = struct {
 	GRPCServer *transport_grpc.ServeGRPC
 	HTTPServer *transport_http.ServeHTTP
 
-	SnowflakeConfig
+	id_generator.SnowflakeConfig
 
 	PasswordSalt string
 	TokenExpired time.Duration
@@ -46,7 +39,7 @@ var Config = struct {
 		Port:     8800,
 		WithCORS: true,
 	},
-	SnowflakeConfig: SnowflakeConfig{
+	SnowflakeConfig: id_generator.SnowflakeConfig{
 		Epoch:      1288351723598,
 		BaseNodeID: 2,
 		NodeCount:  100,
