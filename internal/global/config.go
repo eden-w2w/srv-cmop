@@ -8,7 +8,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"time"
 
-	"github.com/eden-w2w/srv-cmop/internal/databases"
+	"github.com/eden-w2w/lib-modules/databases"
 )
 
 var Config = struct {
@@ -24,8 +24,12 @@ var Config = struct {
 
 	id_generator.SnowflakeConfig
 
+	// 登录设置
 	PasswordSalt string
 	TokenExpired time.Duration
+
+	// 订单超时时间
+	OrderExpireIn time.Duration
 }{
 	LogLevel: logrus.DebugLevel,
 

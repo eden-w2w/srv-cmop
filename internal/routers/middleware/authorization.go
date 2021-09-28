@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"context"
-	"github.com/eden-w2w/srv-cmop/internal/modules/admins"
+	"github.com/eden-w2w/lib-modules/modules/admins"
 )
 
 // Authorization 认证中间件
