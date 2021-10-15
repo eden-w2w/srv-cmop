@@ -4,12 +4,22 @@ import (
 	"github.com/eden-framework/courier/transport_grpc"
 	"github.com/eden-framework/courier/transport_http"
 	"github.com/eden-framework/eden-framework/pkg/client/mysql"
+	"github.com/eden-w2w/lib-modules/constants/enums"
 	"github.com/eden-w2w/lib-modules/modules/id_generator"
+	"github.com/eden-w2w/lib-modules/modules/settlement_flow"
 	"github.com/sirupsen/logrus"
 	"time"
 
 	"github.com/eden-w2w/lib-modules/databases"
 )
+
+type UploaderConfig struct {
+	Type         string
+	Endpoint     string
+	AccessKey    string
+	AccessSecret string
+	BucketName   string
+}
 
 var Config = struct {
 	LogLevel logrus.Level
@@ -30,6 +40,12 @@ var Config = struct {
 
 	// 订单超时时间
 	OrderExpireIn time.Duration
+
+	// 上传设置
+	Uploader UploaderConfig
+
+	// 结算设置
+	settlement_flow.SettlementConfig
 }{
 	LogLevel: logrus.DebugLevel,
 
@@ -49,5 +65,28 @@ var Config = struct {
 		NodeCount:  100,
 		NodeBits:   10,
 		StepBits:   12,
+	},
+	SettlementConfig: settlement_flow.SettlementConfig{
+		SettlementType: enums.SETTLEMENT_TYPE__WEEK,
+		SettlementDate: 1,
+		SettlementRules: []settlement_flow.SettlementRule{
+			{
+				MinSales:   0,
+				MaxSales:   500000,
+				Proportion: 0.1,
+			},
+			{
+				MinSales:   500000,
+				MaxSales:   5000000,
+				Proportion: 0.15,
+			},
+			{
+				MinSales:   5000000,
+				MaxSales:   ^uint64(0),
+				Proportion: 0.2,
+			},
+		},
+		// 结算等待7天，可能涉及7天内退货
+		SettlementDuration: 7 * 24 * time.Hour,
 	},
 }

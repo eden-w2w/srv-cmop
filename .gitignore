@@ -1,5 +1,7 @@
 srv_cmop
 srv-cmop
+srv-cmop-migrate
+srv_cmop_migrate
 .idea
 go.sum
 build/configs/local.yml

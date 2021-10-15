@@ -6,6 +6,9 @@ import (
 	"github.com/eden-w2w/srv-cmop/internal/routers/v0/admins"
 	"github.com/eden-w2w/srv-cmop/internal/routers/v0/goods"
 	"github.com/eden-w2w/srv-cmop/internal/routers/v0/orders"
+	"github.com/eden-w2w/srv-cmop/internal/routers/v0/promotion_flows"
+	"github.com/eden-w2w/srv-cmop/internal/routers/v0/settlements"
+	"github.com/eden-w2w/srv-cmop/internal/routers/v0/users"
 )
 
 var Router = courier.NewRouter(V0Router{})
@@ -24,4 +27,7 @@ func init() {
 	AuthRouter.Register(admins.Router)
 	AuthRouter.Register(goods.Router)
 	AuthRouter.Register(orders.Router)
+	AuthRouter.Register(users.Router)
+	AuthRouter.Register(settlements.Router)
+	AuthRouter.Register(promotion_flows.Router)
 }

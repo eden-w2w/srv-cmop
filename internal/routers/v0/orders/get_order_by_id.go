@@ -31,7 +31,8 @@ func (req GetOrderByID) Output(ctx context.Context) (result interface{}, err err
 	response := &order.GetOrderByIDResponse{
 		OrderID:        o.OrderID,
 		UserID:         o.UserID,
-		RefererID:      o.RefererID,
+		NickName:       o.NickName,
+		OpenID:         o.UserOpenID,
 		TotalPrice:     o.TotalPrice,
 		DiscountAmount: o.DiscountAmount,
 		ActualAmount:   o.ActualAmount,
