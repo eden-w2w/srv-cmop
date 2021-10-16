@@ -20,6 +20,6 @@ spec:
     protocol: TCP
     targetPort: 8800
   selector:
-    workload.user.cattle.io/workloadselector: ${PROJECT_SELECTOR}
+    app: ${PROJECT_NAME}
 status:
   loadBalancer: {}

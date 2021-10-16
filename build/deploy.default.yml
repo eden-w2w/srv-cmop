@@ -8,13 +8,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: ${PROJECT_SELECTOR}
+      app: ${PROJECT_NAME}
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
-      labels:
-        workload.user.cattle.io/workloadselector: ${PROJECT_SELECTOR}
     spec:
       containers:
       - image: ${PROFZONE_DOCKER_REGISTRY}/${PROJECT_GROUP}/${PROJECT_NAME}:${PROJECT_VERSION}
