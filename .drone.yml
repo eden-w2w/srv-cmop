@@ -62,7 +62,7 @@ steps:
   image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-ondeploy:2.4.3
   pull: always
   commands:
-  - eden ci deploy --env=prod
+  - eden ci deploy
   environment:
     GOENV: TEST
   when:
@@ -198,9 +198,7 @@ steps:
   image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-ondeploy:2.4.3
   pull: always
   commands:
-  - eden ci deploy --env=STAGING
-  - eden ci deploy --env=TEST
-  - eden ci deploy --env=DEMO
+  - eden ci deploy --env=PROD
   environment:
     GOENV: PROD
   when:
