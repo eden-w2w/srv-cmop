@@ -8,7 +8,7 @@ volumes:
     path: /var/run/docker.sock
 steps:
 - name: testFeature_test
-  image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-onbuild:1.14
+  image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-onbuild:1.16
   pull: always
   commands:
   - eden ci run test
@@ -25,7 +25,7 @@ steps:
   - name: host
     path: /var/run/docker.sock
 - name: testFeature_build
-  image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-onbuild:1.14
+  image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-onbuild:1.16
   pull: always
   commands:
   - eden ci run build
@@ -42,7 +42,7 @@ steps:
   - name: host
     path: /var/run/docker.sock
 - name: testFeature_ship
-  image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-onship:1.14
+  image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-onship:1.16
   pull: always
   commands:
   - eden ci ship --push
@@ -76,7 +76,7 @@ steps:
   - name: host
     path: /var/run/docker.sock
 - name: demoFeature_test
-  image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-onbuild:1.14
+  image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-onbuild:1.16
   pull: always
   commands:
   - eden ci run test
@@ -93,7 +93,7 @@ steps:
   - name: host
     path: /var/run/docker.sock
 - name: demoFeature_build
-  image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-onbuild:1.14
+  image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-onbuild:1.16
   pull: always
   commands:
   - eden ci run build
@@ -110,7 +110,7 @@ steps:
   - name: host
     path: /var/run/docker.sock
 - name: demoFeature_ship
-  image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-onship:1.14
+  image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-onship:1.16
   pull: always
   commands:
   - eden ci ship --push
@@ -144,7 +144,7 @@ steps:
   - name: host
     path: /var/run/docker.sock
 - name: master_test
-  image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-onbuild:1.14
+  image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-onbuild:1.16
   pull: always
   commands:
   - eden ci run test
@@ -161,7 +161,7 @@ steps:
   - name: host
     path: /var/run/docker.sock
 - name: master_build
-  image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-onbuild:1.14
+  image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-onbuild:1.16
   pull: always
   commands:
   - eden ci run build
@@ -178,7 +178,7 @@ steps:
   - name: host
     path: /var/run/docker.sock
 - name: master_ship
-  image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-onship:1.14
+  image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-onship:1.16
   pull: always
   commands:
   - eden ci ship --push
@@ -214,7 +214,7 @@ steps:
   - name: host
     path: /var/run/docker.sock
 - name: feature_test
-  image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-onbuild:1.14
+  image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-onbuild:1.16
   pull: always
   commands:
   - eden ci run test
@@ -231,7 +231,7 @@ steps:
   - name: host
     path: /var/run/docker.sock
 - name: feature_build
-  image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-onbuild:1.14
+  image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-onbuild:1.16
   pull: always
   commands:
   - eden ci run build
@@ -248,7 +248,7 @@ steps:
   - name: host
     path: /var/run/docker.sock
 - name: feature_ship
-  image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-onship:1.14
+  image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-onship:1.16
   pull: always
   commands:
   - eden ci ship --push
