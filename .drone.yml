@@ -62,7 +62,7 @@ steps:
   image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-ondeploy:2.4.3
   pull: always
   commands:
-  - eden ci deploy
+  - eden ci deploy --env=prod
   environment:
     GOENV: TEST
   when:
