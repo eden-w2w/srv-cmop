@@ -7,23 +7,6 @@ volumes:
   host:
     path: /var/run/docker.sock
 steps:
-- name: master_test
-  image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-onbuild:1.14
-  pull: always
-  commands:
-  - eden ci run test
-  environment:
-    GOENV: PROD
-  when:
-    branch:
-      include:
-      - master
-      exclude: []
-  volumes:
-  - name: temp
-    path: /go
-  - name: host
-    path: /var/run/docker.sock
 - name: master_build
   image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-onbuild:1.14
   pull: always
@@ -59,7 +42,7 @@ steps:
   - name: host
     path: /var/run/docker.sock
 - name: master_deploy
-  image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-ondeploy:2.4.3
+  image: registry.cn-hangzhou.aliyuncs.com/profzone/golang-ondeploy:1.0
   pull: always
   commands:
   - eden ci deploy --env=PROD
