@@ -9,7 +9,7 @@ require (
 	github.com/baiyubin/aliyun-sts-go-sdk v0.0.0-20180326062324-cfa1a18b161f // indirect
 	github.com/eden-framework/context v0.0.3
 	github.com/eden-framework/courier v1.0.5
-	github.com/eden-framework/eden-framework v1.2.4-0.20211017075623-cd25f6b59e98
+	github.com/eden-framework/eden-framework v1.2.4
 	github.com/eden-framework/sqlx v0.0.1
 	github.com/eden-w2w/lib-modules v0.0.7
 	github.com/satori/go.uuid v1.2.0 // indirect
