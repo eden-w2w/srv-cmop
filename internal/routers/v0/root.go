@@ -8,6 +8,7 @@ import (
 	"github.com/eden-w2w/srv-cmop/internal/routers/v0/orders"
 	"github.com/eden-w2w/srv-cmop/internal/routers/v0/promotion_flows"
 	"github.com/eden-w2w/srv-cmop/internal/routers/v0/settlements"
+	"github.com/eden-w2w/srv-cmop/internal/routers/v0/task_flows"
 	"github.com/eden-w2w/srv-cmop/internal/routers/v0/users"
 )
 
@@ -30,4 +31,5 @@ func init() {
 	AuthRouter.Register(users.Router)
 	AuthRouter.Register(settlements.Router)
 	AuthRouter.Register(promotion_flows.Router)
+	AuthRouter.Register(task_flows.Router)
 }
