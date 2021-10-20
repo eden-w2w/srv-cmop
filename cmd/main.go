@@ -12,6 +12,7 @@ import (
 	"github.com/eden-w2w/lib-modules/modules/payment_flow"
 	"github.com/eden-w2w/lib-modules/modules/promotion_flow"
 	"github.com/eden-w2w/lib-modules/modules/settlement_flow"
+	"github.com/eden-w2w/lib-modules/modules/task_flow"
 	"github.com/eden-w2w/lib-modules/modules/user"
 	"github.com/eden-w2w/srv-cmop/pkg/uploader"
 	"github.com/sirupsen/logrus"
@@ -54,6 +55,7 @@ func runner(ctx *context.WaitStopContext) error {
 	promotion_flow.GetController().Init(global.Config.MasterDB)
 	uploader.GetManager().Init(global.Config.Uploader.Type, global.Config.Uploader.Endpoint, global.Config.Uploader.AccessKey, global.Config.Uploader.AccessSecret, global.Config.Uploader.BucketName)
 	settlement_flow.GetController().Init(global.Config.MasterDB, &global.Config.SettlementConfig)
+	task_flow.GetController().Init(global.Config.MasterDB)
 	go settlement_flow.GetController().StartTask()
 	go global.Config.GRPCServer.Serve(ctx, routers.Router)
 	return global.Config.HTTPServer.Serve(ctx, routers.Router)
