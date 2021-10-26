@@ -49,7 +49,7 @@ func (req GetOrderByID) Output(ctx context.Context) (result interface{}, err err
 		UpdatedAt:      o.UpdatedAt,
 		Goods:          make([]order.GoodsListResponse, 0),
 	}
-	goods, err := order.GetController().GetOrderGoods(o.OrderID)
+	goods, err := order.GetController().GetOrderGoods(o.OrderID, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -59,6 +59,7 @@ func (req GetOrderByID) Output(ctx context.Context) (result interface{}, err err
 			Name:           g.Name,
 			MainPicture:    g.MainPicture,
 			Specifications: g.Specifications,
+			Activities:     g.Activities,
 			Price:          g.Price,
 			Amount:         g.Amount,
 		})

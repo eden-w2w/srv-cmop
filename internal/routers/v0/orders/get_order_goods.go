@@ -24,5 +24,5 @@ func (req GetOrderGoods) Path() string {
 }
 
 func (req GetOrderGoods) Output(ctx context.Context) (result interface{}, err error) {
-	return order.GetController().GetOrderGoods(req.OrderID)
+	return order.GetController().GetOrderGoods(req.OrderID, nil)
 }

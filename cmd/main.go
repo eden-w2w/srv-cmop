@@ -56,6 +56,8 @@ func runner(ctx *context.WaitStopContext) error {
 	uploader.GetManager().Init(global.Config.Uploader.Type, global.Config.Uploader.Endpoint, global.Config.Uploader.AccessKey, global.Config.Uploader.AccessSecret, global.Config.Uploader.BucketName)
 	settlement_flow.GetController().Init(global.Config.MasterDB, &global.Config.SettlementConfig)
 	task_flow.GetController().Init(global.Config.MasterDB)
+
+	// TODO 自动取消超时订单任务
 	go settlement_flow.GetController().StartTask()
 	go global.Config.GRPCServer.Serve(ctx, routers.Router)
 	return global.Config.HTTPServer.Serve(ctx, routers.Router)
