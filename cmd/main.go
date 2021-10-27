@@ -14,6 +14,7 @@ import (
 	"github.com/eden-w2w/lib-modules/modules/settlement_flow"
 	"github.com/eden-w2w/lib-modules/modules/task_flow"
 	"github.com/eden-w2w/lib-modules/modules/user"
+	"github.com/eden-w2w/lib-modules/pkg/cron"
 	"github.com/eden-w2w/srv-cmop/pkg/uploader"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -58,7 +59,7 @@ func runner(ctx *context.WaitStopContext) error {
 	task_flow.GetController().Init(global.Config.MasterDB)
 
 	// TODO 自动取消超时订单任务
-	go settlement_flow.GetController().StartTask()
+	cron.GetManager().Start()
 	go global.Config.GRPCServer.Serve(ctx, routers.Router)
 	return global.Config.HTTPServer.Serve(ctx, routers.Router)
 }
