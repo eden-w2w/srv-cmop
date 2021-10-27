@@ -51,7 +51,7 @@ func runner(ctx *context.WaitStopContext) error {
 	admins.GetController().Init(global.Config.MasterDB, global.Config.PasswordSalt, global.Config.TokenExpired)
 	user.GetController().Init(global.Config.MasterDB)
 	goods.GetController().Init(global.Config.MasterDB)
-	order.GetController().Init(global.Config.MasterDB, global.Config.OrderExpireIn, events.NewOrderEvent())
+	order.GetController().Init(global.Config.MasterDB, global.Config.OrderExpireIn, global.Config.CancelExpiredOrderTask, goods.GetController().UnlockInventory, events.NewOrderEvent())
 	payment_flow.GetController().Init(global.Config.MasterDB, 0)
 	promotion_flow.GetController().Init(global.Config.MasterDB)
 	uploader.GetManager().Init(global.Config.Uploader.Type, global.Config.Uploader.Endpoint, global.Config.Uploader.AccessKey, global.Config.Uploader.AccessSecret, global.Config.Uploader.BucketName)

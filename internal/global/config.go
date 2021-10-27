@@ -40,6 +40,8 @@ var Config = struct {
 
 	// 订单超时时间
 	OrderExpireIn time.Duration
+	// 订单超时任务配置
+	CancelExpiredOrderTask string
 
 	// 上传设置
 	Uploader UploaderConfig
