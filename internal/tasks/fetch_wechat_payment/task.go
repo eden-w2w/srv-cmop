@@ -52,7 +52,6 @@ func TaskFetchWechatPaymentStatus() {
 			continue
 		}
 
-		amount := uint64(*tran.Amount.Total)
 		tx := sqlx.NewTasks(global.Config.MasterDB)
 		var paymentFlow *databases.PaymentFlow
 		tx = tx.With(func(db sqlx.DBExecutor) error {
@@ -61,8 +60,11 @@ func TaskFetchWechatPaymentStatus() {
 				return err
 			}
 
-			if paymentFlow.Amount != amount {
-				return general_errors.FlowAmountIncorrect
+			if !tradeState.IsFail() {
+				amount := uint64(*tran.Amount.Total)
+				if paymentFlow.Amount != amount {
+					return general_errors.FlowAmountIncorrect
+				}
 			}
 			return nil
 		})
@@ -91,7 +93,7 @@ func TaskFetchWechatPaymentStatus() {
 					Status: enums.ORDER_STATUS__PAID,
 				}, goods.GetController().LockInventory, goods.GetController().UnlockInventory, db)
 			} else if tradeState.IsFail() {
-				err = payment_flow.GetController().UpdatePaymentFlowStatus(paymentFlow, enums.PAYMENT_STATUS__FAIL, tran, db)
+				err = payment_flow.GetController().UpdatePaymentFlowStatus(paymentFlow, tradeState.ToPaymentStatus(), tran, db)
 			}
 			return
 		})

@@ -11,7 +11,7 @@ require (
 	github.com/eden-framework/courier v1.0.5
 	github.com/eden-framework/eden-framework v1.2.6-0.20211020014935-eab59ae7d198
 	github.com/eden-framework/sqlx v0.0.1
-	github.com/eden-w2w/lib-modules v0.0.9-0.20211102075554-396cb10d05a2
+	github.com/eden-w2w/lib-modules v0.0.9
 	github.com/satori/go.uuid v1.2.0 // indirect
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/cobra v1.2.1
