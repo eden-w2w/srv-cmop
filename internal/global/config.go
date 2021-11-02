@@ -8,6 +8,7 @@ import (
 	"github.com/eden-w2w/lib-modules/constants/enums"
 	"github.com/eden-w2w/lib-modules/modules/id_generator"
 	"github.com/eden-w2w/lib-modules/modules/settlement_flow"
+	"github.com/eden-w2w/lib-modules/modules/wechat"
 	"github.com/sirupsen/logrus"
 	"time"
 
@@ -51,6 +52,9 @@ var Config = struct {
 	settlement_flow.SettlementConfig
 
 	ClientGaode *gaode.GaodeClient
+
+	// wechat config
+	Wechat wechat.Wechat
 }{
 	LogLevel: logrus.DebugLevel,
 

@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/eden-framework/courier"
 	"github.com/eden-framework/courier/httpx"
+	"github.com/eden-w2w/lib-modules/constants/enums"
 	"github.com/eden-w2w/lib-modules/modules/payment_flow"
 	"github.com/eden-w2w/srv-cmop/internal/global"
 )
@@ -25,5 +26,5 @@ func (req GetOrderPayment) Path() string {
 }
 
 func (req GetOrderPayment) Output(ctx context.Context) (result interface{}, err error) {
-	return payment_flow.GetController().GetFlowByOrderAndUserID(req.OrderID, 0, global.Config.MasterDB)
+	return payment_flow.GetController().GetFlowByOrderIDAndStatus(req.OrderID, 0, []enums.PaymentStatus{enums.PAYMENT_STATUS__SUCCESS}, global.Config.MasterDB)
 }

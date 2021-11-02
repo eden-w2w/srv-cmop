@@ -14,7 +14,11 @@ import (
 	"github.com/eden-w2w/lib-modules/modules/settlement_flow"
 	"github.com/eden-w2w/lib-modules/modules/task_flow"
 	"github.com/eden-w2w/lib-modules/modules/user"
+	"github.com/eden-w2w/lib-modules/modules/wechat"
 	"github.com/eden-w2w/lib-modules/pkg/cron"
+	"github.com/eden-w2w/srv-cmop/internal/tasks/cancel_orders"
+	"github.com/eden-w2w/srv-cmop/internal/tasks/fetch_wechat_payment"
+	"github.com/eden-w2w/srv-cmop/internal/tasks/settlement"
 	"github.com/eden-w2w/srv-cmop/pkg/uploader"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -27,16 +31,20 @@ import (
 var cmdMigrationDryRun bool
 
 func main() {
-	app := application.NewApplication(runner, false,
+	app := application.NewApplication(
+		runner, false,
 		application.WithConfig(&global.Config),
-		application.WithConfig(&databases.Config))
+		application.WithConfig(&databases.Config),
+	)
 
 	cmdMigrate := &cobra.Command{
 		Use: "migrate",
 		Run: func(cmd *cobra.Command, args []string) {
-			migrate(&migration.MigrationOpts{
-				DryRun: cmdMigrationDryRun,
-			})
+			migrate(
+				&migration.MigrationOpts{
+					DryRun: cmdMigrationDryRun,
+				},
+			)
 		},
 	}
 	cmdMigrate.Flags().BoolVarP(&cmdMigrationDryRun, "dry", "d", false, "migrate --dry")
@@ -46,19 +54,9 @@ func main() {
 }
 
 func runner(ctx *context.WaitStopContext) error {
-	logrus.SetLevel(global.Config.LogLevel)
-	id_generator.GetGenerator().Init(global.Config.SnowflakeConfig)
-	admins.GetController().Init(global.Config.MasterDB, global.Config.PasswordSalt, global.Config.TokenExpired)
-	user.GetController().Init(global.Config.MasterDB)
-	goods.GetController().Init(global.Config.MasterDB)
-	order.GetController().Init(global.Config.MasterDB, global.Config.OrderExpireIn, global.Config.CancelExpiredOrderTask, goods.GetController().UnlockInventory, events.NewOrderEvent())
-	payment_flow.GetController().Init(global.Config.MasterDB, 0)
-	promotion_flow.GetController().Init(global.Config.MasterDB)
-	uploader.GetManager().Init(global.Config.Uploader.Type, global.Config.Uploader.Endpoint, global.Config.Uploader.AccessKey, global.Config.Uploader.AccessSecret, global.Config.Uploader.BucketName)
-	settlement_flow.GetController().Init(global.Config.MasterDB, &global.Config.SettlementConfig)
-	task_flow.GetController().Init(global.Config.MasterDB)
+	initModules()
+	initTask()
 
-	// TODO 自动取消超时订单任务
 	cron.GetManager().Start()
 	go global.Config.GRPCServer.Serve(ctx, routers.Router)
 	return global.Config.HTTPServer.Serve(ctx, routers.Router)
@@ -66,6 +64,48 @@ func runner(ctx *context.WaitStopContext) error {
 
 func migrate(opts *migration.MigrationOpts) {
 	if err := migration.Migrate(global.Config.MasterDB, opts); err != nil {
+		panic(err)
+	}
+}
+
+func initModules() {
+	logrus.SetLevel(global.Config.LogLevel)
+	id_generator.GetGenerator().Init(global.Config.SnowflakeConfig)
+	admins.GetController().Init(global.Config.MasterDB, global.Config.PasswordSalt, global.Config.TokenExpired)
+	user.GetController().Init(global.Config.MasterDB)
+	goods.GetController().Init(global.Config.MasterDB)
+	order.GetController().Init(global.Config.MasterDB, global.Config.OrderExpireIn, events.NewOrderEvent())
+	payment_flow.GetController().Init(global.Config.MasterDB, 0)
+	promotion_flow.GetController().Init(global.Config.MasterDB)
+	uploader.GetManager().Init(
+		global.Config.Uploader.Type,
+		global.Config.Uploader.Endpoint,
+		global.Config.Uploader.AccessKey,
+		global.Config.Uploader.AccessSecret,
+		global.Config.Uploader.BucketName,
+	)
+	settlement_flow.GetController().Init(global.Config.MasterDB, global.Config.SettlementConfig)
+	task_flow.GetController().Init(global.Config.MasterDB)
+	wechat.GetController().Init(global.Config.Wechat)
+}
+
+func initTask() {
+	if _, err := cron.GetManager().AddFunc(
+		global.Config.SettlementConfig.ToSettlementCronRule(),
+		settlement.TaskSettlement,
+	); err != nil {
+		panic(err)
+	}
+	if _, err := cron.GetManager().AddFunc(
+		global.Config.CancelExpiredOrderTask,
+		cancel_orders.TaskCancelOrders(goods.GetController().UnlockInventory),
+	); err != nil {
+		panic(err)
+	}
+	if _, err := cron.GetManager().AddFunc(
+		global.Config.Wechat.FetchWechatPaymentStatusTask,
+		fetch_wechat_payment.TaskFetchWechatPaymentStatus,
+	); err != nil {
 		panic(err)
 	}
 }
