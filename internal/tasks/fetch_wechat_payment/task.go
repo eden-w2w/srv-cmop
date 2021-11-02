@@ -40,11 +40,6 @@ func TaskFetchWechatPaymentStatus() {
 		}
 		tran, err := wechat.GetController().QueryOrderByOutTradeNo(req)
 		if err != nil {
-			logrus.Warningf(
-				"[TaskFetchWechatPaymentStatus] wechat.GetController().QueryOrderByOutTradeNo err: %v, request: %+v",
-				err,
-				req,
-			)
 			continue
 		}
 		tradeState, err := enums.ParseWechatTradeStateFromString(*tran.TradeState)
@@ -54,6 +49,7 @@ func TaskFetchWechatPaymentStatus() {
 				err,
 				*tran.TradeState,
 			)
+			continue
 		}
 
 		amount := uint64(*tran.Amount.Total)
