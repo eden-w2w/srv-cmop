@@ -26,7 +26,12 @@ func (req GetOrderPayment) Path() string {
 }
 
 func (req GetOrderPayment) Output(ctx context.Context) (result interface{}, err error) {
-	flows, err := payment_flow.GetController().GetFlowByOrderIDAndStatus(req.OrderID, 0, []enums.PaymentStatus{enums.PAYMENT_STATUS__SUCCESS}, global.Config.MasterDB)
+	flows, err := payment_flow.GetController().GetFlowByOrderIDAndStatus(
+		req.OrderID,
+		0,
+		[]enums.PaymentStatus{enums.PAYMENT_STATUS__SUCCESS, enums.PAYMENT_STATUS__REFUND},
+		global.Config.MasterDB,
+	)
 	if err != nil {
 		return
 	}
