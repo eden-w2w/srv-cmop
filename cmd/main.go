@@ -74,7 +74,7 @@ func initModules() {
 	admins.GetController().Init(global.Config.MasterDB, global.Config.PasswordSalt, global.Config.TokenExpired)
 	user.GetController().Init(global.Config.MasterDB)
 	goods.GetController().Init(global.Config.MasterDB)
-	order.GetController().Init(global.Config.MasterDB, global.Config.OrderExpireIn, events.NewOrderEvent())
+	order.GetController().Init(global.Config.MasterDB, global.Config.OrderExpireIn, events.NewOrderEvent(global.Config.Wechat.MerchantID))
 	payment_flow.GetController().Init(global.Config.MasterDB, 0)
 	promotion_flow.GetController().Init(global.Config.MasterDB)
 	uploader.GetManager().Init(
