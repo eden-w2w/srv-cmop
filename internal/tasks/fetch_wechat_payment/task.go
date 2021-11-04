@@ -95,7 +95,7 @@ func TaskFetchWechatPaymentStatus() {
 			} else if tradeState.IsFail() {
 				err = payment_flow.GetController().UpdatePaymentFlowStatus(paymentFlow, tradeState.ToPaymentStatus(), tran, db)
 			}
-			return
+			return payment_flow.GetController().UpdatePaymentFlowRemoteID(paymentFlow.FlowID, *tran.TransactionId, db)
 		})
 
 		err = tx.Do()
