@@ -24,6 +24,7 @@ type EnumsResponse struct {
 	OrderStatus      []KVItem `json:"orderStatus"`
 	PaymentMethod    []KVItem `json:"paymentMethod"`
 	SettlementStatus []KVItem `json:"settlementStatus"`
+	PaymentStatus    []KVItem `json:"paymentStatus"`
 }
 
 type KVItem struct {
@@ -53,6 +54,13 @@ func (req Enums) Output(ctx context.Context) (result interface{}, err error) {
 	settlementStatus := (enums.SettlementStatus(0)).Enums()
 	for _, i := range settlementStatus {
 		response.SettlementStatus = append(response.SettlementStatus, KVItem{
+			Value: i[0],
+			Label: i[1],
+		})
+	}
+	paymentStatus := (enums.PaymentStatus(0)).Enums()
+	for _, i := range paymentStatus {
+		response.PaymentStatus = append(response.PaymentStatus, KVItem{
 			Value: i[0],
 			Label: i[1],
 		})
