@@ -77,7 +77,7 @@ func initModules() {
 	order.GetController().Init(
 		global.Config.MasterDB,
 		global.Config.OrderExpireIn,
-		events.NewOrderEvent(global.Config.Wechat.MerchantID),
+		events.NewOrderEvent(global.Config.Wechat),
 	)
 	payment_flow.GetController().Init(global.Config.MasterDB, 0)
 	promotion_flow.GetController().Init(global.Config.MasterDB)
