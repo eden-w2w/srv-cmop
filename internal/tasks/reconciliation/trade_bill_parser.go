@@ -78,7 +78,7 @@ func NewTradeBillParser(data []byte) *TradeBillParser {
 }
 
 func (p TradeBillParser) Errors() string {
-	return strings.Join(p.errors, ", ")
+	return strings.Join(p.errors, ", \n")
 }
 
 func (p *TradeBillParser) Iterator(check func(bill *TradeBill, last bool) (err error)) error {
