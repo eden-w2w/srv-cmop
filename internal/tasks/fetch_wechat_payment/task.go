@@ -77,6 +77,24 @@ func TaskFetchWechatPaymentStatus() {
 					return nil
 				}
 				if tradeState.IsSuccess() {
+					// 检查代金券信息
+					var discountAmount, actualAmount = uint64(0), uint64(0)
+					if len(tran.PromotionDetail) > 0 {
+						for _, detail := range tran.PromotionDetail {
+							discountAmount += uint64(*detail.Amount)
+						}
+						actualAmount = paymentFlow.Amount - discountAmount
+						err = payment_flow.GetController().UpdatePaymentFlowAmount(
+							paymentFlow.FlowID,
+							discountAmount,
+							actualAmount,
+							db,
+						)
+						if err != nil {
+							return err
+						}
+					}
+
 					err = payment_flow.GetController().UpdatePaymentFlowStatus(
 						paymentFlow,
 						enums.PAYMENT_STATUS__SUCCESS,
@@ -102,10 +120,20 @@ func TaskFetchWechatPaymentStatus() {
 					if err != nil {
 						return err
 					}
+					updateParams := order.UpdateOrderParams{
+						Status: enums.ORDER_STATUS__PAID,
+					}
+					if len(tran.PromotionDetail) > 0 {
+						updateParams.DiscountAmount = discountAmount
+					}
 					err = order.GetController().UpdateOrder(
-						orderModel, logistics, orderGoods, order.UpdateOrderParams{
-							Status: enums.ORDER_STATUS__PAID,
-						}, goods.GetController().LockInventory, goods.GetController().UnlockInventory, db,
+						orderModel,
+						logistics,
+						orderGoods,
+						updateParams,
+						goods.GetController().LockInventory,
+						goods.GetController().UnlockInventory,
+						db,
 					)
 				} else if tradeState.IsFail() {
 					err = payment_flow.GetController().UpdatePaymentFlowStatus(
