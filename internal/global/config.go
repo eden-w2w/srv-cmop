@@ -44,6 +44,8 @@ var Config = struct {
 	OrderExpireIn time.Duration
 	// 订单超时任务配置
 	CancelExpiredOrderTask string
+	// 对账任务配置
+	ReconciliationTask string
 
 	// 上传设置
 	Uploader UploaderConfig

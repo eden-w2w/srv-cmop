@@ -18,6 +18,7 @@ import (
 	"github.com/eden-w2w/lib-modules/pkg/cron"
 	"github.com/eden-w2w/srv-cmop/internal/tasks/cancel_orders"
 	"github.com/eden-w2w/srv-cmop/internal/tasks/fetch_wechat_payment"
+	"github.com/eden-w2w/srv-cmop/internal/tasks/reconciliation"
 	"github.com/eden-w2w/srv-cmop/internal/tasks/settlement"
 	"github.com/eden-w2w/srv-cmop/pkg/uploader"
 	"github.com/sirupsen/logrus"
@@ -109,6 +110,12 @@ func initTask() {
 	if _, err := cron.GetManager().AddFunc(
 		global.Config.Wechat.FetchWechatPaymentStatusTask,
 		fetch_wechat_payment.TaskFetchWechatPaymentStatus,
+	); err != nil {
+		panic(err)
+	}
+	if _, err := cron.GetManager().AddFunc(
+		global.Config.ReconciliationTask,
+		reconciliation.TaskReconciliation,
 	); err != nil {
 		panic(err)
 	}
