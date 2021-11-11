@@ -11,6 +11,7 @@ import (
 	"github.com/eden-w2w/lib-modules/modules/order"
 	"github.com/eden-w2w/lib-modules/modules/payment_flow"
 	"github.com/eden-w2w/lib-modules/modules/promotion_flow"
+	"github.com/eden-w2w/lib-modules/modules/refund_flow"
 	"github.com/eden-w2w/lib-modules/modules/settlement_flow"
 	"github.com/eden-w2w/lib-modules/modules/task_flow"
 	"github.com/eden-w2w/lib-modules/modules/user"
@@ -18,6 +19,7 @@ import (
 	"github.com/eden-w2w/lib-modules/pkg/cron"
 	"github.com/eden-w2w/srv-cmop/internal/tasks/cancel_orders"
 	"github.com/eden-w2w/srv-cmop/internal/tasks/fetch_wechat_payment"
+	"github.com/eden-w2w/srv-cmop/internal/tasks/fetch_wechat_refund"
 	"github.com/eden-w2w/srv-cmop/internal/tasks/reconciliation"
 	"github.com/eden-w2w/srv-cmop/internal/tasks/settlement"
 	"github.com/eden-w2w/srv-cmop/pkg/uploader"
@@ -92,6 +94,7 @@ func initModules() {
 	settlement_flow.GetController().Init(global.Config.MasterDB, global.Config.SettlementConfig)
 	task_flow.GetController().Init(global.Config.MasterDB)
 	wechat.GetController().Init(global.Config.Wechat)
+	refund_flow.GetController().Init(global.Config.MasterDB)
 }
 
 func initTask() {
@@ -116,6 +119,12 @@ func initTask() {
 	if _, err := cron.GetManager().AddFunc(
 		global.Config.ReconciliationTask,
 		reconciliation.TaskReconciliation,
+	); err != nil {
+		panic(err)
+	}
+	if _, err := cron.GetManager().AddFunc(
+		global.Config.Wechat.FetchWechatRefundTask,
+		fetch_wechat_refund.TaskFetchWechatRefundStatus,
 	); err != nil {
 		panic(err)
 	}

@@ -5,6 +5,7 @@ import (
 	"github.com/eden-w2w/srv-cmop/internal/routers/middleware"
 	"github.com/eden-w2w/srv-cmop/internal/routers/v0/admins"
 	"github.com/eden-w2w/srv-cmop/internal/routers/v0/goods"
+	"github.com/eden-w2w/srv-cmop/internal/routers/v0/notify"
 	"github.com/eden-w2w/srv-cmop/internal/routers/v0/orders"
 	"github.com/eden-w2w/srv-cmop/internal/routers/v0/payment_flows"
 	"github.com/eden-w2w/srv-cmop/internal/routers/v0/promotion_flows"
@@ -26,6 +27,7 @@ func (V0Router) Path() string {
 
 func init() {
 	Router.Register(AuthRouter)
+	Router.Register(notify.Router)
 	AuthRouter.Register(admins.Router)
 	AuthRouter.Register(goods.Router)
 	AuthRouter.Register(orders.Router)
