@@ -15,7 +15,7 @@ func init() {
 // GetRefundFlows 获取退款单列表
 type GetRefundFlows struct {
 	httpx.MethodGet
-	refund_flow.GetRefundFlowsRequest `in:"body"`
+	refund_flow.GetRefundFlowsRequest
 }
 
 func (req GetRefundFlows) Path() string {
