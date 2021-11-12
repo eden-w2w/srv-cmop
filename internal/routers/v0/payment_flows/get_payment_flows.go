@@ -15,7 +15,6 @@ func init() {
 // GetPaymentFlows 获取支付单列表
 type GetPaymentFlows struct {
 	httpx.MethodGet
-
 	payment_flow.GetPaymentFlowsParams
 }
 
