@@ -11,7 +11,7 @@ require (
 	github.com/eden-framework/courier v1.0.5
 	github.com/eden-framework/eden-framework v1.2.6-0.20211020014935-eab59ae7d198
 	github.com/eden-framework/sqlx v0.0.1
-	github.com/eden-w2w/lib-modules v0.1.5-0.20211114060024-aa8b170d6940
+	github.com/eden-w2w/lib-modules v0.1.5
 	github.com/eden-w2w/wechatpay-go v0.2.12-0.20211113040433-9a6f58350e2d
 	github.com/satori/go.uuid v1.2.0 // indirect
 	github.com/sirupsen/logrus v1.8.1

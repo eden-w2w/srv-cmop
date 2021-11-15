@@ -12,6 +12,7 @@ import (
 	"github.com/eden-w2w/lib-modules/modules/payment_flow"
 	"github.com/eden-w2w/lib-modules/modules/promotion_flow"
 	"github.com/eden-w2w/lib-modules/modules/refund_flow"
+	"github.com/eden-w2w/lib-modules/modules/settings"
 	"github.com/eden-w2w/lib-modules/modules/settlement_flow"
 	"github.com/eden-w2w/lib-modules/modules/task_flow"
 	"github.com/eden-w2w/lib-modules/modules/user"
@@ -95,6 +96,7 @@ func initModules() {
 	task_flow.GetController().Init(global.Config.MasterDB)
 	wechat.GetController().Init(global.Config.Wechat)
 	refund_flow.GetController().Init(global.Config.MasterDB)
+	settings.GetController().Init(global.Config.MasterDB)
 }
 
 func initTask() {

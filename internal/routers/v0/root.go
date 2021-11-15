@@ -10,6 +10,7 @@ import (
 	"github.com/eden-w2w/srv-cmop/internal/routers/v0/payment_flows"
 	"github.com/eden-w2w/srv-cmop/internal/routers/v0/promotion_flows"
 	"github.com/eden-w2w/srv-cmop/internal/routers/v0/refund_flows"
+	"github.com/eden-w2w/srv-cmop/internal/routers/v0/settings"
 	"github.com/eden-w2w/srv-cmop/internal/routers/v0/settlements"
 	"github.com/eden-w2w/srv-cmop/internal/routers/v0/task_flows"
 	"github.com/eden-w2w/srv-cmop/internal/routers/v0/users"
@@ -38,4 +39,5 @@ func init() {
 	AuthRouter.Register(payment_flows.Router)
 	AuthRouter.Register(task_flows.Router)
 	AuthRouter.Register(refund_flows.Router)
+	AuthRouter.Register(settings.Router)
 }
