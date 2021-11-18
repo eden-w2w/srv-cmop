@@ -143,11 +143,14 @@ func TaskFetchWechatPaymentStatus() {
 						db,
 					)
 				}
-				return payment_flow.GetController().UpdatePaymentFlowRemoteID(
-					paymentFlow.FlowID,
-					*tran.TransactionId,
-					db,
-				)
+				if tran.TransactionId != nil {
+					return payment_flow.GetController().UpdatePaymentFlowRemoteID(
+						paymentFlow.FlowID,
+						*tran.TransactionId,
+						db,
+					)
+				}
+				return nil
 			},
 		)
 

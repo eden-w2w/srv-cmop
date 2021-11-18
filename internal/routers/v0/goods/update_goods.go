@@ -25,6 +25,6 @@ func (req UpdateGoodsByID) Path() string {
 }
 
 func (req UpdateGoodsByID) Output(ctx context.Context) (result interface{}, err error) {
-	err = goods.GetController().UpdateGoods(req.GoodsID, req.Body)
+	err = goods.GetController().UpdateGoods(req.GoodsID, req.Body, nil)
 	return
 }

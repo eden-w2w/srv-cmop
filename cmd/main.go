@@ -5,6 +5,7 @@ import (
 	"github.com/eden-framework/eden-framework/pkg/application"
 	"github.com/eden-framework/sqlx/migration"
 	"github.com/eden-w2w/lib-modules/modules/admins"
+	"github.com/eden-w2w/lib-modules/modules/booking_flow"
 	"github.com/eden-w2w/lib-modules/modules/events"
 	"github.com/eden-w2w/lib-modules/modules/goods"
 	"github.com/eden-w2w/lib-modules/modules/id_generator"
@@ -23,6 +24,7 @@ import (
 	"github.com/eden-w2w/srv-cmop/internal/tasks/fetch_wechat_refund"
 	"github.com/eden-w2w/srv-cmop/internal/tasks/reconciliation"
 	"github.com/eden-w2w/srv-cmop/internal/tasks/settlement"
+	"github.com/eden-w2w/srv-cmop/internal/tasks/update_booking_flow"
 	"github.com/eden-w2w/srv-cmop/pkg/uploader"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -81,7 +83,11 @@ func initModules() {
 	order.GetController().Init(
 		global.Config.MasterDB,
 		global.Config.OrderExpireIn,
-		events.NewOrderEvent(global.Config.Wechat),
+		events.NewOrderEvent(
+			global.Config.Wechat,
+			goods.GetController().LockInventory,
+			goods.GetController().UnlockInventory,
+		),
 	)
 	payment_flow.GetController().Init(global.Config.MasterDB, 0)
 	promotion_flow.GetController().Init(global.Config.MasterDB)
@@ -97,6 +103,7 @@ func initModules() {
 	wechat.GetController().Init(global.Config.Wechat)
 	refund_flow.GetController().Init(global.Config.MasterDB)
 	settings.GetController().Init(global.Config.MasterDB)
+	booking_flow.GetController().Init(global.Config.MasterDB)
 }
 
 func initTask() {
@@ -127,6 +134,12 @@ func initTask() {
 	if _, err := cron.GetManager().AddFunc(
 		global.Config.Wechat.FetchWechatRefundTask,
 		fetch_wechat_refund.TaskFetchWechatRefundStatus,
+	); err != nil {
+		panic(err)
+	}
+	if _, err := cron.GetManager().AddFunc(
+		global.Config.BookingFlowsTask,
+		update_booking_flow.TaskUpdateBookingFlow,
 	); err != nil {
 		panic(err)
 	}

@@ -46,6 +46,8 @@ var Config = struct {
 	CancelExpiredOrderTask string
 	// 对账任务配置
 	ReconciliationTask string
+	// 预售单任务配置
+	BookingFlowsTask string
 
 	// 上传设置
 	Uploader UploaderConfig

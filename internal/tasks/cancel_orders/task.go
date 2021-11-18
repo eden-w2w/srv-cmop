@@ -27,7 +27,7 @@ func TaskCancelOrders(unlocker order.InventoryUnlock) func() {
 		}
 
 		for _, o := range orders {
-			err := order.GetController().CancelOrder(o.OrderID, 0, unlocker)
+			err := order.GetController().CancelOrder(o.OrderID, 0)
 			if err != nil {
 				logrus.Errorf("[TaskCancelExpiredOrders] c.CancelOrder err: %v, orderID: %d", err, o.OrderID)
 			}
