@@ -39,7 +39,7 @@ func TaskUpdateBookingFlow() {
 			}
 
 			tx := sqlx.NewTasks(global.Config.MasterDB)
-			tx.With(
+			tx = tx.With(
 				func(db sqlx.DBExecutor) error {
 					flow, err := booking_flow.GetController().CreateBookingFlow(
 						booking_flow.CreateBookingFlowParams{
