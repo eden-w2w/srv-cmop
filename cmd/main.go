@@ -6,6 +6,7 @@ import (
 	"github.com/eden-framework/sqlx/migration"
 	"github.com/eden-w2w/lib-modules/modules/admins"
 	"github.com/eden-w2w/lib-modules/modules/booking_flow"
+	"github.com/eden-w2w/lib-modules/modules/discounts"
 	"github.com/eden-w2w/lib-modules/modules/events"
 	"github.com/eden-w2w/lib-modules/modules/goods"
 	"github.com/eden-w2w/lib-modules/modules/id_generator"
@@ -104,6 +105,7 @@ func initModules() {
 	refund_flow.GetController().Init(global.Config.MasterDB)
 	settings.GetController().Init(global.Config.MasterDB)
 	booking_flow.GetController().Init(global.Config.MasterDB)
+	discounts.GetController().Init(global.Config.MasterDB)
 }
 
 func initTask() {

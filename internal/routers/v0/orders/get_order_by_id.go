@@ -59,7 +59,6 @@ func (req GetOrderByID) Output(ctx context.Context) (result interface{}, err err
 			Name:           g.Name,
 			MainPicture:    g.MainPicture,
 			Specifications: g.Specifications,
-			Activities:     g.Activities,
 			Price:          g.Price,
 			Amount:         g.Amount,
 		})
