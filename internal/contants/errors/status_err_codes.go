@@ -36,6 +36,10 @@ const (
 const (
 	// @errTalk 不允许操作
 	Forbidden status_error.StatusErrorCode = http.StatusForbidden*1e6 + ServiceStatusErrorCode + iota
+	// @errTalk 预售状态必须为就绪才能执行开始操作
+	BookingStatusForbidStart
+	// @errTalk 预售状态必须为进行中才能执行完成操作
+	BookingStatusForbidComplete
 )
 
 const (
