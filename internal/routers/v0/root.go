@@ -6,6 +6,7 @@ import (
 	"github.com/eden-w2w/srv-cmop/internal/routers/v0/admins"
 	"github.com/eden-w2w/srv-cmop/internal/routers/v0/booking_flows"
 	"github.com/eden-w2w/srv-cmop/internal/routers/v0/discounts"
+	"github.com/eden-w2w/srv-cmop/internal/routers/v0/freight_templates"
 	"github.com/eden-w2w/srv-cmop/internal/routers/v0/goods"
 	"github.com/eden-w2w/srv-cmop/internal/routers/v0/notify"
 	"github.com/eden-w2w/srv-cmop/internal/routers/v0/orders"
@@ -44,4 +45,5 @@ func init() {
 	AuthRouter.Register(settings.Router)
 	AuthRouter.Register(booking_flows.Router)
 	AuthRouter.Register(discounts.Router)
+	AuthRouter.Register(freight_templates.Router)
 }

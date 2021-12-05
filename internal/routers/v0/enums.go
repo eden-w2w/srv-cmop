@@ -31,6 +31,7 @@ type EnumsResponse struct {
 	DiscountType     []KVItem `json:"discountType"`
 	DiscountStatus   []KVItem `json:"discountStatus"`
 	DiscountCal      []KVItem `json:"discountCal"`
+	FreightCal       []KVItem `json:"freightCal"`
 }
 
 type KVItem struct {
@@ -128,6 +129,15 @@ func (req Enums) Output(ctx context.Context) (result interface{}, err error) {
 	for _, i := range discountCal {
 		response.DiscountCal = append(
 			response.DiscountCal, KVItem{
+				Value: i[0],
+				Label: i[1],
+			},
+		)
+	}
+	freightCal := (enums.FreightCal(0)).Enums()
+	for _, i := range freightCal {
+		response.FreightCal = append(
+			response.FreightCal, KVItem{
 				Value: i[0],
 				Label: i[1],
 			},

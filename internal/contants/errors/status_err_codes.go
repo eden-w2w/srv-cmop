@@ -40,6 +40,8 @@ const (
 	BookingStatusForbidStart
 	// @errTalk 预售状态必须为进行中才能执行完成操作
 	BookingStatusForbidComplete
+	// @errTalk 存在已关联的商品，需要解除关联才能删除运费模板
+	TemplateForbidDelete
 )
 
 const (
