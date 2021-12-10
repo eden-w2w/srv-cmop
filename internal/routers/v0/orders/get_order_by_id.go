@@ -57,10 +57,12 @@ func (req GetOrderByID) Output(ctx context.Context) (result interface{}, err err
 		response.Goods = append(response.Goods, order.GoodsListResponse{
 			GoodsID:        g.GoodsID,
 			Name:           g.Name,
+			Comment:        g.Comment,
 			MainPicture:    g.MainPicture,
 			Specifications: g.Specifications,
 			Price:          g.Price,
 			Amount:         g.Amount,
+			IsBooking:      g.IsBooking,
 		})
 	}
 	return response, nil
