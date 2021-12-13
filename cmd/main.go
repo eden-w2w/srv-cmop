@@ -21,6 +21,7 @@ import (
 	"github.com/eden-w2w/lib-modules/modules/user"
 	"github.com/eden-w2w/lib-modules/modules/wechat"
 	"github.com/eden-w2w/lib-modules/pkg/cron"
+	"github.com/eden-w2w/lib-modules/pkg/webhook"
 	"github.com/eden-w2w/srv-cmop/internal/tasks/cancel_orders"
 	"github.com/eden-w2w/srv-cmop/internal/tasks/fetch_wechat_payment"
 	"github.com/eden-w2w/srv-cmop/internal/tasks/fetch_wechat_refund"
@@ -108,6 +109,7 @@ func initModules() {
 	booking_flow.GetController().Init(global.Config.MasterDB)
 	discounts.GetController().Init(global.Config.MasterDB)
 	freight_template.GetController().Init(global.Config.MasterDB)
+	webhook.GetInstance().MustInit(global.Config.MasterDB)
 }
 
 func initTask() {

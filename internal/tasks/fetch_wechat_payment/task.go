@@ -10,6 +10,7 @@ import (
 	"github.com/eden-w2w/lib-modules/modules/order"
 	"github.com/eden-w2w/lib-modules/modules/payment_flow"
 	"github.com/eden-w2w/lib-modules/modules/wechat"
+	"github.com/eden-w2w/lib-modules/pkg/webhook"
 	"github.com/eden-w2w/srv-cmop/internal/global"
 	"github.com/eden-w2w/wechatpay-go/core"
 	"github.com/eden-w2w/wechatpay-go/services/payments/jsapi"
@@ -135,6 +136,10 @@ func TaskFetchWechatPaymentStatus() {
 						goods.GetController().UnlockInventory,
 						db,
 					)
+					if err != nil {
+						return err
+					}
+					go webhook.GetInstance().SendPayment(orderModel, paymentFlow, logistics)
 				} else if tradeState.IsFail() {
 					err = payment_flow.GetController().UpdatePaymentFlowStatus(
 						paymentFlow,
@@ -150,7 +155,7 @@ func TaskFetchWechatPaymentStatus() {
 						db,
 					)
 				}
-				return nil
+				return
 			},
 		)
 
