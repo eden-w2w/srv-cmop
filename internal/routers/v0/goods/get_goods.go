@@ -47,10 +47,7 @@ func (req GetGoods) Output(ctx context.Context) (result interface{}, err error) 
 		item := GetGoodsResponse{
 			Goods: gModel,
 		}
-		flows, err := booking_flow.GetController().GetBookingFlowByGoodsIDAndStatus(
-			gModel.GoodsID,
-			enums.BOOKING_STATUS__PROCESS,
-		)
+		flows, err := booking_flow.GetController().GetBookingFlowByGoodsID(gModel.GoodsID)
 		if err != nil {
 			return nil, err
 		}

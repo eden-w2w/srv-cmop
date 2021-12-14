@@ -27,10 +27,7 @@ func TaskUpdateBookingFlow() {
 	}
 	for _, g := range goodsList {
 		if g.Inventory == 0 && g.IsAllowBooking == datatypes.BOOL_TRUE {
-			flows, err := booking_flow.GetController().GetBookingFlowByGoodsIDAndStatus(
-				g.GoodsID,
-				enums.BOOKING_STATUS__PROCESS,
-			)
+			flows, err := booking_flow.GetController().GetBookingFlowByGoodsID(g.GoodsID)
 			if err != nil {
 				continue
 			}
